@@ -1,20 +1,28 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addTodoActionCreator, deleteTodoActionCreator, removeAllActionCreator } from "../../actions/todo.action";
+import { useDispatch } from "react-redux";
+import { addTodoActionCreator } from "../../actions/todo.action";
+import ToDoList from "./ToDoList";
 
 
 const ToDoApp = () => {
-
-  const todoList = useSelector((state) => {
-    console.log(state.toDoReducer.list);
-    return state.toDoReducer.list;
-  });
 
   const [inputData, setInputData] = useState('');
 
   const inputEvent = (event) => {
     setInputData(event.target.value);
   }
+
+  // const handleKeypress = (e) => {
+  //     //it triggers by pressing the enter key
+  //   if (e.keyCode === 13) {
+  //     addTodo(inputData);
+  //   }
+  // };
+
+  const addTodo = (inputData) => {
+    dispatch(addTodoActionCreator(inputData));
+    setInputData("");
+  };
 
   const dispatch = useDispatch();
 
@@ -28,43 +36,18 @@ const ToDoApp = () => {
             className="form-control"
             placeholder="Add Items..."
             onChange={inputEvent}
+            // onKeyPress={handleKeypress}
             value={inputData}
           />
         </div>
         <button
           className="btn btn-primary mb-2"
-          onClick={() =>
-            dispatch(addTodoActionCreator(inputData), setInputData(""))
-          }
+          onClick={() => addTodo(inputData)}
         >
           Add
         </button>
       </div>
-      <ul className="list-group mb-4">
-        {todoList.map((item) => {
-          return (
-            <li
-              key={item.id}
-              className="d-flex justify-content-between list-group-item text-success"
-            >
-              {item.data}
-              <span
-                onClick={() => dispatch(deleteTodoActionCreator(item.id))}
-                className="btn btn-warning btn-sm"
-              >
-                X
-              </span>
-            </li>
-          );
-        })}
-      </ul>
-      {todoList.length ? (
-        <button className="btn btn-primary mb-2" onClick={() => dispatch(removeAllActionCreator())}>
-          Delete All
-        </button>
-      ) : (
-        ""
-      )}
+      <ToDoList />
     </div>
   );
 }
