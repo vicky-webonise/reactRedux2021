@@ -10,14 +10,14 @@ const UsersList = () => {
     return state.user.users;
   });
 
-  const deleteUser = (userName) => {
+  const deleteUser = (username) => {
     // dispatch({
     //   type: "REMOVE_USER",
     //   user: {
-    //     userName,
+    //     username,
     //   },
     // });
-    dispatch(deleteActionCreator(userName));
+    dispatch(deleteActionCreator(username));
   };
 
   return (
@@ -25,9 +25,9 @@ const UsersList = () => {
       <h1 className="homeWrap">Users List {users.length}</h1>
       {users.map((item, index) => {
         return (
-          <h4 key={item.userName}>
-            {index} {item.userName}
-            <button type="button" onClick={() => deleteUser(item.userName)} className="btn btn-danger ml-3">
+          <h4 key={item.id}>
+            {item.id} {item.username}
+            <button type="button" onClick={() => deleteUser(item.username)} className="btn btn-danger ml-3">
               X
             </button>
           </h4>

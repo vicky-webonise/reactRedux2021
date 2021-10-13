@@ -1,4 +1,4 @@
-import { ADD_USER_ACTION, HIDE_LOADER_ACTION, REMOVE_USER_ACTION, SHOW_LOADER_ACTION } from "../actions/user.action";
+import { ADD_USER_ACTION, HIDE_LOADER_ACTION, REMOVE_USER_ACTION, SET_USER_ACTION, SHOW_LOADER_ACTION } from "../actions/user.action";
 
 const initialState = {
   users: [],
@@ -7,6 +7,13 @@ const initialState = {
 
 export const userReducer = (state=initialState, action) => {
   switch (action.type) {
+    case SET_USER_ACTION:
+      return {
+        ...state,
+        users: action.users,
+      };
+      // break;
+
     case ADD_USER_ACTION:
       return {
         ...state,
@@ -17,7 +24,7 @@ export const userReducer = (state=initialState, action) => {
     case REMOVE_USER_ACTION:
       return {
         ...state,
-        users: state.users.filter((item) => item.userName !== action.userName),
+        users: state.users.filter((item) => item.username !== action.username),
       };
       // break;
 
